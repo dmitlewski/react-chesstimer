@@ -32,7 +32,8 @@ function App() {
     // setSeconds(s => s + 1)
     // somewhere in react internals, this happens:
     // setSeconds(add1(seconds)) - man kann der set-Methode anstelle von einem direkten Wert auch eine Funktion übergeben. macht hier Sinn, weil wenn die App rerendert wird, die funktion mit einem neuen seconds gebaut wird, welches keinen Bezug mehr zu dem alten seconds hat und dadurh funktioniert das nicht mehr - "scoping"
-    setSeconds(oldSeconds => oldSeconds -1)// Oldseconds wird an eine Funktion ohne Name übergeben, die sie um eins erniedrigt
+    setSeconds(oldSeconds => oldSeconds -1)// Oldseconds wird an eine Funktion ohne Name übergeben, die sie um eins erniedrigt. 
+    //WICHTIG: WENN MAN EINE FUNKTION AN DIE SET-HOOK ÜBERGIBT, DANN ÜBERGIBT DIE SETHOOK IMMER DEN ALTEN WERT IHRER VARIABLE (HIER SECONDS) AN DIESE FUNKTION, AUCH WENN ICH DIESE IN DER FUNKTION GARNICHT VERWENDEN WILL
   }
 
   function startCounting() {
