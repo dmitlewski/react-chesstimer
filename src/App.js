@@ -14,6 +14,7 @@ add1(undefined)  // NaN =  Not A Number
 function App() {
 
   const [seconds, setSeconds] = useState(0)
+  const [intervalId, setIntervalId] = useState()
 
   console.log("render")
 
@@ -33,10 +34,19 @@ function App() {
 
   function startCounting() {
     // Lieber browser, benutz diese Funktion und ruf sie einmal pro sekund auf
-    setInterval(nextSecond, 1000)
+    const intervalId = setInterval(nextSecond, 100)
+    setIntervalId(intervalId)
   }
 
   useEffect(startCounting, [])
+
+  function stopCountingAt30() {
+    if (seconds === 30) {
+      clearInterval(intervalId)
+    }
+  }
+
+  useEffect(stopCountingAt30, [seconds, intervalId])
 
   // Dieser Effect wird nur einmal ausgeführt
   useEffect(() => {
