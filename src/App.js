@@ -14,11 +14,8 @@ function add1(x) {
 function App() {
 
   // const [minutes, setMinutes] = useState(3)
-  const [secondsHighDigit, setSecondsHighDigit] = useState(1) //test für 10 sekunden.
+  const [secondsHighDigit, setSecondsHighDigit] = useState(6) //test für 10 sekunden.
   const [secondsLowDigit, setSecondsLowDigit] = useState(1)
-  const [minutesHighDigit, seMinutesHighDigit] = useState(0)
-  const [minutesLowDigit, setMinutesLowDigit] = useState (1);
-
 
   const [ticker , setTicker] = useState(0)
   
@@ -53,17 +50,12 @@ function App() {
     if(secondsLowDigit === 0 && secondsHighDigit != 0){
       setSecondsLowDigit((secondsLowDigit) =>9);
       console.log(secondsLowDigit);//secondsLowDigit belibt 0????
-      setSecondsHighDigit((secondsHighDigit) => secondsHighDigit -1);  
+      setSecondsHighDigit((secondsHighDigit) => secondsHighDigit -1);
+      
+      
     }
-
-    //if(secondsLowDigit === 0 && secondsHighDigit === 0 && (minutesLowDigit != 0 || minutesHighDigit != 0){
-      setMinutesLowDigit((minutesLowDigit)=> minutesLowDigit -1);
-    //}
-
-    //if(minutesLowDigit === 0)
-
     //Timer terminieren
-    else if(secondsLowDigit === 0 && secondsHighDigit === 0 && minutesLowDigit === 0 && minutesHighDigit ===0){
+    else if(secondsLowDigit === 0 && secondsHighDigit === 0){
       stopCounting(); 
       setIsClockRunning(false);
       setButtonState("Start");
@@ -147,7 +139,7 @@ function App() {
 
   return (
     <div>
-      {minutesHighDigit}{minutesLowDigit}:{secondsHighDigit}{secondsLowDigit} <button onClick={handleButton}>{buttonState}</button>
+      0:{secondsHighDigit}{secondsLowDigit} <button onClick={handleButton}>{buttonState}</button>
     </div>
   );
 }
