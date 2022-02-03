@@ -78,6 +78,7 @@ function App() {
 
   function startCounting() {
     // Lieber browser, benutz diese Funktion namens nextSeconds und ruf sie einmal pro sekund auf
+    // Tell the browser _once_ to use the _first_ "version" of nextTick and call it many times
     const intervalId = setInterval(nextTick, 1000) //setInterval gibt einen Wert zurück - eine ID. 
     
     console.log(intervalId)
