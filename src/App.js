@@ -7,6 +7,27 @@ function add1(x) {
   return x + 1
 }
 
+
+/**
+ * Assumption n does not have more than two digits
+ *
+ * > toTwoDigitString(15)
+ * < "15"
+ * > toTwoDigitString(5)
+ * > "05"
+ */
+function toTwoDigitString(n) {
+  // if (n > 99 || n < 0) {
+  //   throw Error("n is weird I dunno what to do")
+  // }
+
+  if (n > 9) {
+    return "" + n
+  } else {
+    return "0" + n
+  }
+}
+
 //add1(1, 2, 3) // 2
 //add1()  // NaN =  Not A Number
 //add1(undefined)  // NaN =  Not A Number
@@ -15,12 +36,9 @@ function App() {
 
   // const [minutes, setMinutes] = useState(3)
   const [secondsHighDigit, setSecondsHighDigit] = useState(6) //test für 10 sekunden.
-  const [secondsLowDigit, setSecondsLowDigit] = useState(1)
+  const [secondsLowDigit, setSecondsLowDigit] = useState(0)
 
-  const [ticker , setTicker] = useState(0)
-  
-
-  const [intervalId, setIntervalId] = useState() //aus startCounting() rausgeholt, damit wir sie global sehen können
+  const [timeoutId, setTimeoutId] = useState() //aus startCounting() rausgeholt, damit wir sie global sehen können
   const [isClockRunning, setIsClockRunning] = useState(false) //Timer läuft nicht
   const [buttonState, setButtonState] = useState("Start")
 
@@ -48,7 +66,7 @@ function App() {
   function nextDigits(){
     // uebergang: :10 => :09
     if(secondsLowDigit === 0 && secondsHighDigit != 0){
-      setSecondsLowDigit((secondsLowDigit) =>9);
+      setSecondsLowDigit((secondsLowDigit) => 9);
       console.log(secondsLowDigit);//secondsLowDigit belibt 0????
       setSecondsHighDigit((secondsHighDigit) => secondsHighDigit -1);
       
@@ -64,36 +82,27 @@ function App() {
     else{
       setSecondsLowDigit((secondsLowDigit) => secondsLowDigit -1);
     }
-  }
-
-
-
-  useEffect(nextDigits , [ticker]); //muss deshalb den counter um 1 zuviel stellen (ugly as f...)
-
-
-  function nextTick (){
-    setTicker((oldTick)=>oldTick + 1);
+    startCounting()
   }
 
 
   function startCounting() {
     // Lieber browser, benutz diese Funktion namens nextSeconds und ruf sie einmal pro sekund auf
-    // Tell the browser _once_ to use the _first_ "version" of nextTick and call it many times
-    const intervalId = setInterval(nextTick, 1000) //setInterval gibt einen Wert zurück - eine ID. 
+    const timeoutId = setTimeout(nextDigits, 1000) //setInterval gibt einen Wert zurück - eine ID.
     
-    console.log(intervalId)
-    setIntervalId(intervalId)
+    console.log(timeoutId)
+    setTimeoutId(timeoutId)
   }
 
   //useEffect(startCounting, []) 
 
   // function stopCountingAt30() {
   //   if (seconds === 30) {
-  //     clearInterval(intervalId)
+  //     clearInterval(timeoutId)
   //   }
   // }
 
-  //useEffect(stopCountingAt30, [seconds, intervalId])
+  //useEffect(stopCountingAt30, [seconds, timeoutId])
 
   // Dieser Effect wird nur einmal ausgeführt. Wenn sich etwas in der dependencylist verändert, wird er erneut ausgeführt und damit seine im Inneren befindliche Funktion
   //useEffect(() => {
@@ -104,7 +113,7 @@ function App() {
 
 
   function stopCounting(){
-    clearInterval(intervalId)
+    clearTimeout(timeoutId)
   }
 
   // Kurzfassung
@@ -137,7 +146,6 @@ function App() {
   //   document.title = "seconds remaining: " + (seconds)
   // }, [seconds])
 
-
   return (
     <div>
       0:{secondsHighDigit}{secondsLowDigit} <button onClick={handleButton}>{buttonState}</button>
@@ -146,5 +154,3 @@ function App() {
 }
 
 export default App;
-
-
