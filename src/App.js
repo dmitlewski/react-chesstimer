@@ -32,7 +32,12 @@ function toTwoDigitString(n) {
 //add1()  // NaN =  Not A Number
 //add1(undefined)  // NaN =  Not A Number
 
-function App() {
+function App(props) {
+  let secondDuration = props.secondDuration
+  if (secondDuration === undefined) {
+    secondDuration = 1000
+  }
+  // const secondDuration = props.secondDuration ?? 1000
 
   // const [minutes, setMinutes] = useState(3)
   const [secondsHighDigit, setSecondsHighDigit] = useState(6) //test für 10 sekunden.
@@ -88,7 +93,7 @@ function App() {
 
   function startCounting() {
     // Lieber browser, benutz diese Funktion namens nextSeconds und ruf sie einmal pro sekund auf
-    const timeoutId = setTimeout(nextDigits, 1000) //setInterval gibt einen Wert zurück - eine ID.
+    const timeoutId = setTimeout(nextDigits, secondDuration) //setInterval gibt einen Wert zurück - eine ID.
     
     console.log(timeoutId)
     setTimeoutId(timeoutId)
