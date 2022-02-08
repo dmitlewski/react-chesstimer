@@ -13,7 +13,7 @@ clearTimeout(timeoutId)
 
 
 
-const intervalId = setInterval(tick, 1000)  // run tick() once after 1 second
+const intervalId = setInterval(tick, 1000)  // run tick() once after 1 second. WICHTIG: WENN GERERENDERT WIRD, DANN WIRD IMMERNOCH DIE ALTE FUNKTION AUSGEFÜHRT WEIL BEIM RERENDERN EINE NEUE FUNKTION TICK ERSCHAFFEN WIRD...
 clearInterval(intervalId)
 
 
@@ -29,7 +29,7 @@ const someArray = [
 someArray[1]  // "World"
 
 
-// JS: Object is an instance
+// JS: Object is an instance. Keine Klasse sondern eine Instanz.
 const someObject = {
   // Key: Value
   foo: "Hello",
@@ -52,7 +52,7 @@ const vectorAsObject = { x: 1, y: 24, z: 1337 }
 
 
 
-let o
+let o //ist ein Objekt
 o = {x: 1, y: 5}
 o = {"x": 1, "y": 5}
 o = {["x"]: 1, ["y"]: 5}
@@ -74,7 +74,7 @@ uglyObject[2]
 uglyObject[""]
 
 
-// Was ist eine Methode in JavaScript
+// Was ist eine Methode in JavaScript - selbes Prinzip: Key -value, nur das der value jetzt eine Funktion ist, die dort definiert wurde
 const myObjectWithFunction = {
   // Key: Value
   foo: "Hello",

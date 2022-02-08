@@ -40,8 +40,11 @@ function App(props) {
   // const secondDuration = props.secondDuration ?? 1000
 
   // const [minutes, setMinutes] = useState(3)
-  const [secondsHighDigit, setSecondsHighDigit] = useState(6) //test für 10 sekunden.
-  const [secondsLowDigit, setSecondsLowDigit] = useState(0)
+  //const [secondsHighDigit, setSecondsHighDigit] = useState(6) //test für 10 sekunden.
+  //const [secondsLowDigit, setSecondsLowDigit] = useState(0)
+
+  const [seconds, setSeconds] = useState(3);
+  const [minutes , setMinutes] = useState(0);
 
   const [timeoutId, setTimeoutId] = useState() //aus startCounting() rausgeholt, damit wir sie global sehen können
   const [isClockRunning, setIsClockRunning] = useState(false) //Timer läuft nicht
@@ -68,35 +71,53 @@ function App(props) {
   //   setSeconds((oldSeconds) => oldSeconds -1)
   // }
 
+  // function nextDigits(){
+  //   // uebergang: :10 => :09
+  //   if(secondsLowDigit === 0 && secondsHighDigit != 0){
+  //     setSecondsLowDigit((secondsLowDigit) => 9);
+  //     console.log(secondsLowDigit);//secondsLowDigit belibt 0????
+  //     setSecondsHighDigit((secondsHighDigit) => secondsHighDigit -1);
+      
+      
+  //   }
+  //   //Timer terminieren
+  //   else if(secondsLowDigit === 0 && secondsHighDigit === 0){
+  //     stopCounting(); 
+  //     setIsClockRunning(false);
+  //     setButtonState("Start");
+
+  //   }
+  //   else{
+  //     setSecondsLowDigit((secondsLowDigit) => secondsLowDigit -1);
+  //   }
+  //   startCounting()
+  // }
+
   function nextDigits(){
-    // uebergang: :10 => :09
-    if(secondsLowDigit === 0 && secondsHighDigit != 0){
-      setSecondsLowDigit((secondsLowDigit) => 9);
-      console.log(secondsLowDigit);//secondsLowDigit belibt 0????
-      setSecondsHighDigit((secondsHighDigit) => secondsHighDigit -1);
-      
-      
-    }
-    //Timer terminieren
-    else if(secondsLowDigit === 0 && secondsHighDigit === 0){
+    //normalize seconds:
+    //const secondsNormalized = toTwoDigitString(seconds);
+    setSeconds((oldSeconds) => oldSeconds - 1); //newSeconds machen
+    
+    console.log(seconds);
+     if(seconds === 0){
+      console.log("render");
       stopCounting(); 
       setIsClockRunning(false);
       setButtonState("Start");
-
-    }
-    else{
-      setSecondsLowDigit((secondsLowDigit) => secondsLowDigit -1);
-    }
-    startCounting()
+     }
+     else{
+      startCounting();
+     }
+    
+   
   }
 
 
   function startCounting() {
     // Lieber browser, benutz diese Funktion namens nextSeconds und ruf sie einmal pro sekund auf
-    const timeoutId = setTimeout(nextDigits, secondDuration) //setInterval gibt einen Wert zurück - eine ID.
-    
-    console.log(timeoutId)
-    setTimeoutId(timeoutId)
+    const timeoutId = setTimeout(nextDigits, secondDuration) //setTimeout gibt einen Wert zurück - eine ID.
+    setTimeoutId(timeoutId); //damit die timeoutID von außen sichtbar ist und sich nicht mit jedem rerender verändert.
+   
   }
 
   //useEffect(startCounting, []) 
@@ -130,7 +151,6 @@ function App(props) {
   function handleButton(_e){
     switch(isClockRunning){
       case false: {
-
         startCounting();
         setIsClockRunning(true);
         //setIsClockRunning(cs => !cs) //nur bei Booleans!!!!!!!
@@ -153,7 +173,7 @@ function App(props) {
 
   return (
     <div>
-      0:{secondsHighDigit}{secondsLowDigit} <button onClick={handleButton}>{buttonState}</button>
+      {minutes}:{seconds} <button onClick={handleButton}>{buttonState}</button>
     </div>
   );
 }
